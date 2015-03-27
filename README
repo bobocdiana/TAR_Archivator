@@ -1,0 +1,51 @@
+BOBOC DIANA-ANDREEA GRUPA 312 CA
+Pentru rezolvarea problemei am folosit functiile :
+    -void load( char archivename[30]) cu urmatoarele specificatii:
+        Se citeste din fisierul file_ls cate o linie pana la intalnirea EOF.Din 
+        aceasta linie,cu ajutorul functiei strtok se retin pe rand:
+            -permisiunile care se stocheaza in variabila m.header.mode in octal de forma 0000777\0
+            -numele ownerului fisierului care se stocheaza in variabila m.header.uname
+            -numele grupului din care face parte fisierul care se stocheaza in 
+            variabila m.header.gname
+            -dimensiunea fisierului care se transforma in octal si se retine in 
+            variabila m.header.size sub forma 00000000259\0
+            -timpul de existenta al fisierului care se transforma in secunde si 
+            se retine in octal in variabila m.header.mtime sub forma 00000123456\0
+            -numele fisierului care se stocheaza in variabila m.header.name si 
+            in variabila m.header.linkname
+            -pentru aflarea UID SI GID se cauta m.header.uname in fisierul 
+            usermap.txt si de pe linia pe care a fost gasit se extrag cele 2 valori 
+            si se retin in octal in variabilele m.header.uid si m.header.gid sub 
+            forma 0001750\0
+            -se calculeaza checksum-ul adunand codurile ASCII al fiecarui caracter 
+            din header
+        Odata header-ul format,acesta se afiseaza in arhiva,dupa care se copiaza 
+        continutul fisierului arhivat.Daca dimensiunea acestui continut nu a putut 
+        completa un nr de blocuri de dimensiune 512,atunci se scriu in completare 
+        caractere '\0'.
+    
+    -void list (char archivename[30]) cu urmatoarele specificatii:
+        Se citeste cate un header din arhiva,pana se intalneste EOF.Dupa fiecare 
+        header citit,se afiseaza numele fisierului (aux.header.name)si se retine 
+        dimensiunea fisierului curent si se transforma in zecimal.Daca aceasta 
+        dimensiune a reusit sa acopere un numar de blocuri intregi de 512 octeti,
+        atunci se muta cursorul din fisierul arhiva peste continutul fisierlui.In 
+        caz contrar,cursorul se muta si peste caracterele '\0' ce completeaza acele 
+        blocurile de 512 octeti.
+    
+    -void get (char archivename[30],char filename[30]) cu urmatoarele specificatii:
+        Se citeste cate un header din arhiva,pana se intalneste EOF.Dupa fiecare 
+        header,se calculeaza si se retine dimensiunea fisierului curent in zecimal 
+        (in variabila decimal) .Se verifica daca numele fisierului curent corespunde 
+        cu numele fisierului al carui continut trebuie afisat,iar in caz afirmativ 
+        se afiseaza decimal octeti care corespund continutului fisierlui curent.In 
+        caz negativ,se verifica daca dimensiunea fisierului curent a reusit sa 
+        acopere complet un numar de blocuri de dimensiune 512.Daca acest fapt s-a 
+        intamplat,se va muta cursorul din fisierul arhiva peste continutul 
+        fisierului curent,iar in caz contrar se muta si peste caracterele '\0' 
+        folosite pentru completarea acelor blocuri de octeti.
+
+Pentru citirea comenzilor am folosit functia strtok si fgets,iar in functie 
+de comanda apelata,s-au retinut argumentele comenzii si s-au apelat functiile corespunzatoare.
+      
+    
